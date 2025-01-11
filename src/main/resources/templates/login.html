@@ -1,106 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <meta name="description" content="Login to JspGram - Share your moments">
+    <title>JspGram - Login</title>
+
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+
     <style>
+        :root {
+            --primary-color: #0095f6;
+            --secondary-color: #00376b;
+            --background-color: #fafafa;
+            --error-color: #ed4956;
+            --success-color: #2ecc71;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            background-color: var(--background-color);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            min-height: 100vh;
+        }
+
+        .logo {
+            margin-bottom: 2rem;
+        }
+
+        .logo img {
+            width: 175px;
+            height: auto;
         }
 
         .login-container {
-            background: #ffffff;
-            padding: 20px 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 300px;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1px;
+            border: 1px solid #dbdbdb;
+            width: 100%;
+            max-width: 350px;
+            margin-bottom: 1rem;
         }
 
-        .login-container h2 {
-            margin-bottom: 20px;
-            color: #333;
+        .message {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .success-message {
+            color: var(--success-color);
+        }
+
+        .error-message {
+            color: var(--error-color);
         }
 
         .form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
-            color: #555;
+            margin-bottom: 1rem;
         }
 
         .form-group input {
             width: 100%;
-            padding: 10px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            outline: none;
+            padding: 0.75rem;
+            background-color: #fafafa;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            font-size: 0.875rem;
         }
 
         .form-group input:focus {
-            border-color: #007bff;
+            outline: none;
+            border-color: #a8a8a8;
         }
 
-        .login-btn {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
+        .login-button {
             width: 100%;
+            padding: 0.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
         }
 
-        .login-btn:hover {
-            background-color: #0056b3;
+        .login-button:hover {
+            background-color: #0081d6;
         }
 
-        .new-user {
-            margin-top: 20px;
-            font-size: 14px;
+        .register-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 1px;
+            border: 1px solid #dbdbdb;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
         }
 
-        .new-user a {
-            color: #007bff;
+        .register-link {
+            color: var(--secondary-color);
+            font-size: 0.875rem;
+        }
+
+        .register-link a {
+            color: var(--primary-color);
             text-decoration: none;
+            font-weight: 600;
         }
 
-        .new-user a:hover {
-            text-decoration: underline;
+        .footer {
+            margin-top: 2rem;
+            color: #8e8e8e;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+
+        @media (max-width: 450px) {
+
+            .login-container,
+            .register-container {
+                border: none;
+                background: transparent;
+            }
+
+            body {
+                background-color: white;
+            }
         }
     </style>
 </head>
+
 <body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <form action="/login" method="post">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" class="login-btn">Login</button>
-        </form>
-        <div class="new-user">
-            Don't Have account? <a href="/register">Register here</a>
-        </div>
+    <div class="logo">
+        <img src="/images/jspgram-logo.png" alt="JspGram Logo">
     </div>
+
+    <div class="message">
+        <h3 class="success-message" th:text="${session.pass}"></h3>
+        <h3 class="error-message" th:text="${session.fail}"></h3>
+        <th:block th:text="${@messageRemover.remove()}"></th:block>
+    </div>
+
+    <div class="login-container">
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="login-button">Log In</button>
+        </form>
+    </div>
+
+    <div class="register-container">
+        <p class="register-link">Don't have an account? <a href="/register">Sign up</a></p>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 JspGram</p>
+    </footer>
 </body>
+
 </html>

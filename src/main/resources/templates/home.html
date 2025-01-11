@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JspGram - Your Social Media Feed">
+    <title>JspGram - Home</title>
+
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+
+    <style>
+        :root {
+            --primary-color: #0095f6;
+            --secondary-color: #00376b;
+            --background-color: #fafafa;
+            --border-color: #dbdbdb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+        }
+
+        .navbar {
+            background-color: white;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 975px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 103px;
+            height: auto;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .profile-button,
+        .logout-button {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .profile-button {
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+        }
+
+        .logout-button {
+            background-color: var(--primary-color);
+            border: none;
+            color: white;
+        }
+
+        .main-content {
+            max-width: 600px;
+            margin: 100px auto 0;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .all-caught-up {
+            padding: 3rem 0;
+        }
+
+        .checkmark-circle {
+            width: 100px;
+            height: 100px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .checkmark-circle svg {
+            width: 50px;
+            height: 50px;
+            color: white;
+        }
+
+        .caught-up-text {
+            font-size: 1.5rem;
+            color: #262626;
+            margin-bottom: 0.5rem;
+        }
+
+        .caught-up-subtext {
+            color: #8e8e8e;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.75rem 1rem;
+            }
+
+            .nav-content {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <a href="/home"><img src="/images/jspgram-logo.png" alt="JspGram Logo"></a>
+            </div>
+            <div class="nav-right">
+                <a href="/profile"><button class="profile-button">Profile</button></a>
+
+                <a href="/logout"> <button type="submit" class="logout-button">Logout</button></a>
+
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="all-caught-up">
+            <div class="checkmark-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+            <h2 class="caught-up-text">You're All Caught Up</h2>
+            <p class="caught-up-subtext">You've seen all new posts</p>
+        </div>
+    </main>
+</body>
+
+</html>
+</div>
+</form>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JspGram - Profile Page">
+    <title>JspGram - Profile</title>
+
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+
+    <style>
+        :root {
+            --primary-color: #0095f6;
+            --secondary-color: #00376b;
+            --background-color: #fafafa;
+            --border-color: #dbdbdb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+        }
+
+        .navbar {
+            background-color: white;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 975px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 103px;
+            height: auto;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-right button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .nav-right button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .profile-container {
+            max-width: 935px;
+            margin: 100px auto 0;
+            padding: 2rem;
+        }
+
+        .profile-header {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .edit-profile-btn {
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 2rem;
+            padding: 1rem 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .post-item {
+            aspect-ratio: 1;
+            background-color: #ddd;
+        }
+
+        .add-post-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <a href="/home"><img src="/images/jspgram-logo.png" alt="JspGram Logo"></a>
+            </div>
+            <div class="nav-right">
+                <a href="/home"><button class="profile-button">Home</button></a>
+                <a href="/logout"><button class="logout-button">Logout</button></a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="profile-container">
+        <section class="profile-header">
+            <img th:if="${session.user.imageUrl==null}"  src="https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png" alt="Profile Picture" class="profile-picture">
+            <img th:if="${session.user.imageUrl}"  th:src="${session.user.imageUrl}" alt="Profile Picture" class="profile-picture">
+            <div class="profile-info">
+                <h1 th:text="${session.user.username}"></h1>
+                <p th:text="${session.user.email}"></p>
+                <p th:if="${session.user.bio}">Bio: <span th:text="${session.user.bio}"></span> </p>
+                <div class="profile-actions">
+                   <a href="/edit-profile"> <button class="edit-profile-btn">Edit Profile</button></a>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-container">
+            <div class="stat-item">
+                <h3>Posts</h3>
+                <span>0</span>
+            </div>
+            <div class="stat-item">
+                <h3>Followers</h3>
+                <span>0</span>
+            </div>
+            <div class="stat-item">
+                <h3>Following</h3>
+                <span>0</span>
+            </div>
+        </section>
+
+        <div th:if="${posts}">
+            <h1>My Posts</h1>
+            <div th:each="post:${posts}">
+                <img th:src="${post.imageUrl}" height="150px" width="150px"><br>
+                <span th:text="${post.caption}"></span><br>
+                <span th:text="${post.postedTime}"></span><br>
+                <button>Edit</button><button>Delete</button>
+            </div>
+            <br>
+        </div>
+
+
+        <a href="/add-post"><button class="add-post-btn">Add New Post</button></a>
+        
+        <div th:if="${add}">
+        	<form action="/add-post" method="post" enctype="multipart/form-data">
+        	Image : <input type="file" name="image" required>
+			<br><br>
+			Caption: <input type="text" name="caption" required>
+			<br><br>
+			<button>Add</button>
+        	</form>
+        </div>
+    </main>
+</body>
+</html></section></div>

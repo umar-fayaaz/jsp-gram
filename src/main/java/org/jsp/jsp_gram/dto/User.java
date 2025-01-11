@@ -42,4 +42,6 @@ public class User {
 	private String confirmpassword;
 	private int otp;
 	private boolean verified;
+	private String bio;
+	private String imageUrl;
 }
